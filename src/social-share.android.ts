@@ -33,12 +33,9 @@ export function shareImage(image, subject, fileName) {
   const stream = new java.io.ByteArrayOutputStream();
   image.android.compress(android.graphics.Bitmap.CompressFormat.JPEG, 100, stream);
 
-  if (fileName) {
-    const imageFileName = fileName;
-  } else {
-    const imageFileName = "socialsharing_" + numberOfImagesCreated + ".jpg";
-  }
-  const newFile = new java.io.File(context.getExternalFilesDir(null), imageFileName);
+  const imageFileName = "socialsharing_" + numberOfImagesCreated + ".jpg";
+
+  const newFile = new java.io.File(context.getExternalFilesDir(null), fileName ? fileName : imageFileName);
 
   const fos = new java.io.FileOutputStream(newFile);
   fos.write(stream.toByteArray());
