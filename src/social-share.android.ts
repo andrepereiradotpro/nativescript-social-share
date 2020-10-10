@@ -19,12 +19,12 @@ function share(intent, subject) {
   shareIntent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
   context.startActivity(shareIntent);
 }
-function useAndroidX () {
+function useAndroidX() {
   return global.androidx && global.androidx.appcompat;
 }
 
-export function shareImage(image, subject) {
-  numberOfImagesCreated ++;
+export function shareImage(image, subject, fileName) {
+  numberOfImagesCreated++;
 
   context = application.android.context;
 
@@ -33,7 +33,11 @@ export function shareImage(image, subject) {
   const stream = new java.io.ByteArrayOutputStream();
   image.android.compress(android.graphics.Bitmap.CompressFormat.JPEG, 100, stream);
 
-  const imageFileName = "socialsharing" + numberOfImagesCreated + ".jpg";
+  if (fileName) {
+    const imageFileName = fileName;
+  } else {
+    const imageFileName = "socialsharing_" + numberOfImagesCreated + ".jpg";
+  }
   const newFile = new java.io.File(context.getExternalFilesDir(null), imageFileName);
 
   const fos = new java.io.FileOutputStream(newFile);
